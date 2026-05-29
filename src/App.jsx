@@ -2,6 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import { siteContent } from "./siteContent.js";
 
 const cardCuts = ["cut-corners", "card-cut-b", "card-cut-c"];
+
+function resolvePublicAsset(path) {
+  if (!path || path.startsWith("data:") || path.startsWith("http")) return path;
+  return `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+}
+
 const MONTH_MAP = {
   jan: 0,
   january: 0,
@@ -219,7 +225,7 @@ export default function App() {
         subtitle: project.type,
         description: project.description,
         tags: project.tags ?? [],
-        slides: [project.imageUrl || makePlaceholderSlide(project.title)],
+        slides: [project.imageUrl ? resolvePublicAsset(project.imageUrl) : makePlaceholderSlide(project.title)],
       })),
     [content.projects],
   );
@@ -400,7 +406,7 @@ export default function App() {
           <div className="card-cut-b reveal-up reveal-on-scroll relative w-full overflow-hidden border border-white/20 bg-ink">
             <div className="relative h-full min-h-[18rem] w-full">
               <img
-                src={content.heroImage}
+                src={resolvePublicAsset(content.heroImage)}
                 alt={content.hero.title}
                 className="hero-parallax-image relative z-0 mx-auto block h-full w-full max-w-full object-cover brightness-[0.88] contrast-[1.28] saturate-[0.82]"
               />
