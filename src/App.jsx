@@ -8,6 +8,10 @@ function resolvePublicAsset(path) {
   return `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
 }
 
+function resolveAppLink(hash = "") {
+  return `${import.meta.env.BASE_URL}${hash}`;
+}
+
 const MONTH_MAP = {
   jan: 0,
   january: 0,
@@ -263,7 +267,7 @@ export default function App() {
     : "";
   const closeArchive = () => {
     window.close();
-    window.location.href = "/";
+    window.location.href = import.meta.env.BASE_URL;
   };
 
   useEffect(() => {
@@ -458,7 +462,7 @@ export default function App() {
             index={s.projects.index}
             title={s.projects.title}
             subtitle={s.projects.subtitle}
-            action={{ label: "Ver mas", href: "/#web-archive", newTab: true }}
+            action={{ label: "Ver mas", href: resolveAppLink("#web-archive"), newTab: true }}
           />
           <div className="grid gap-4 md:grid-cols-3">
             {content.projects.map((project, index) => (
@@ -502,7 +506,7 @@ export default function App() {
             index={s.touchDesigner.index}
             title={s.touchDesigner.title}
             subtitle={s.touchDesigner.subtitle}
-            action={{ label: "Ver mas", href: "/#touchdesigner-archive", newTab: true }}
+            action={{ label: "Ver mas", href: resolveAppLink("#touchdesigner-archive"), newTab: true }}
           />
           <div className="grid gap-4 md:grid-cols-3">
             {content.touchDesignerLoops.map((loop, index) => (
@@ -536,7 +540,7 @@ export default function App() {
             index={s.blender.index}
             title={s.blender.title}
             subtitle={s.blender.subtitle}
-            action={{ label: "Ver mas", href: "/#blender-archive", newTab: true }}
+            action={{ label: "Ver mas", href: resolveAppLink("#blender-archive"), newTab: true }}
           />
           <div className="grid gap-4 md:grid-cols-2">
             {content.blenderWorks.slice(0, 2).map((work, index) => (
